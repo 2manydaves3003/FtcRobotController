@@ -47,7 +47,7 @@ public class TeleOp_OpMode extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        Robot m_robot = new SWTestBot(OpModeType.TELEOP, hardwareMap, telemetry);
+        Robot m_robot = new SWTestBot(OpModeType.TELEOP, hardwareMap, telemetry, gamepad1);
 
         //Wait for driver to press PLAY
         waitForStart();

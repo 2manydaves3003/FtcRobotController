@@ -9,15 +9,17 @@ import com.arcrobotics.ftclib.kinematics.wpilibkinematics.ChassisSpeeds;
 import com.arcrobotics.ftclib.kinematics.wpilibkinematics.MecanumDriveKinematics;
 import com.arcrobotics.ftclib.kinematics.wpilibkinematics.MecanumDriveWheelSpeeds;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 public class MecanumDriveTrain extends SubsystemBase {
 
     Motor m_frontLeftMotor;
     Motor m_frontRightMotor;
     Motor m_backLeftMotor;
     Motor m_backRightMotor;
+    Telemetry m_telemetry;
 
-    ChassisSpeeds m_speeds = new ChassisSpeeds(0.0, 0.0, 0.0);
-    Rotation2d m_gyroAngle = new Rotation2d(0.0);
+    ChassisSpeeds m_robotCentricSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
 
     // Locations of the wheels relative to the robot center.
     Translation2d m_frontLeftLocation =
@@ -34,31 +36,29 @@ public class MecanumDriveTrain extends SubsystemBase {
                     m_frontLeftLocation, m_frontRightLocation,
                     m_backLeftLocation, m_backRightLocation);
 
-    public MecanumDriveTrain(Motor frontLeft, Motor frontRight, Motor backLeft, Motor backRight)
+    public MecanumDriveTrain(Motor frontLeft, Motor frontRight, Motor backLeft, Motor backRight, Telemetry telemetry)
     {
         m_frontLeftMotor = frontLeft;
         m_frontRightMotor = frontRight;
         m_backLeftMotor = backLeft;
         m_backRightMotor = backRight;
+        m_telemetry = telemetry;
     }
 
-    public void driveFieldCentric(ChassisSpeeds speeds, Rotation2d gyroAngle) {
-        m_speeds = speeds;
-        m_gyroAngle = gyroAngle;
+    public void drive(ChassisSpeeds robotCentricSpeeds) {
+        m_robotCentricSpeeds = robotCentricSpeeds;
     }
 
     @Override
     public void periodic()
     {
-        ChassisSpeeds robotSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-                m_speeds.vxMetersPerSecond,
-                m_speeds.vyMetersPerSecond,
-                m_speeds.omegaRadiansPerSecond,
-                m_gyroAngle);
-
         MecanumDriveWheelSpeeds wheelSpeeds =
-                m_kinematics.toWheelSpeeds(robotSpeeds);
+                m_kinematics.toWheelSpeeds(m_robotCentricSpeeds);
 
-        //m_frontLeftMotor.set();
+        m_telemetry.addData("FL", wheelSpeeds.frontLeftMetersPerSecond);
+        m_telemetry.addData("FR", wheelSpeeds.frontRightMetersPerSecond);
+        m_telemetry.addData("BL", wheelSpeeds.rearLeftMetersPerSecond);
+        m_telemetry.addData("BR", wheelSpeeds.rearRightMetersPerSecond);
+        m_telemetry.update();
     }
 }
