@@ -1,8 +1,6 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
-import com.arcrobotics.ftclib.drivebase.MecanumDrive;
-import com.arcrobotics.ftclib.geometry.Rotation2d;
 import com.arcrobotics.ftclib.geometry.Translation2d;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.kinematics.wpilibkinematics.ChassisSpeeds;
@@ -21,15 +19,18 @@ public class MecanumDriveTrain extends SubsystemBase {
 
     ChassisSpeeds m_robotCentricSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
 
+    final double DRIVEBASEWIDTH = 0.254; //meters
+    final double DRIVEBASELENGTH = 0.2921; //meters
+
     // Locations of the wheels relative to the robot center.
     Translation2d m_frontLeftLocation =
-            new Translation2d(0.381, 0.381);
+            new Translation2d(DRIVEBASELENGTH/2.0, DRIVEBASEWIDTH/2.0);
     Translation2d m_frontRightLocation =
-            new Translation2d(0.381, -0.381);
+            new Translation2d(DRIVEBASELENGTH/2.0, -DRIVEBASEWIDTH/2.0);
     Translation2d m_backLeftLocation =
-            new Translation2d(-0.381, 0.381);
+            new Translation2d(-DRIVEBASELENGTH/2.0, DRIVEBASEWIDTH/2.0);
     Translation2d m_backRightLocation =
-            new Translation2d(-0.381, -0.381);
+            new Translation2d(-DRIVEBASELENGTH/2.0, -DRIVEBASEWIDTH/2.0);
 
     // Creating my kinematics object using the wheel locations.
     MecanumDriveKinematics m_kinematics = new MecanumDriveKinematics(
@@ -59,6 +60,10 @@ public class MecanumDriveTrain extends SubsystemBase {
         m_telemetry.addData("FR", wheelSpeeds.frontRightMetersPerSecond);
         m_telemetry.addData("BL", wheelSpeeds.rearLeftMetersPerSecond);
         m_telemetry.addData("BR", wheelSpeeds.rearRightMetersPerSecond);
+        m_telemetry.addData("MaxTicksPerSecond", m_frontLeftMotor.ACHIEVABLE_MAX_TICKS_PER_SECOND);
         m_telemetry.update();
+
+
+        //m_frontLeftMotor.set();
     }
 }
