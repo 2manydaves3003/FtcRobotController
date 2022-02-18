@@ -53,17 +53,25 @@ public class MecanumDriveTrain extends SubsystemBase {
     @Override
     public void periodic()
     {
+        //Note: this kinematic model scales the wheel speeds by 1/sqrt(2)
         MecanumDriveWheelSpeeds wheelSpeeds =
                 m_kinematics.toWheelSpeeds(m_robotCentricSpeeds);
+
+        //The speeds need be normalized between +/- 1.0 (i.e. it's the range that "set" method below will accept)
+        wheelSpeeds.normalize(1.0);
 
         m_telemetry.addData("FL", wheelSpeeds.frontLeftMetersPerSecond);
         m_telemetry.addData("FR", wheelSpeeds.frontRightMetersPerSecond);
         m_telemetry.addData("BL", wheelSpeeds.rearLeftMetersPerSecond);
         m_telemetry.addData("BR", wheelSpeeds.rearRightMetersPerSecond);
         m_telemetry.addData("MaxTicksPerSecond", m_frontLeftMotor.ACHIEVABLE_MAX_TICKS_PER_SECOND);
+        m_telemetry.addData("RPM", m_frontLeftMotor.getMaxRPM());
+        m_telemetry.addData("CPR", m_frontLeftMotor.getCPR());
         m_telemetry.update();
 
-
-        //m_frontLeftMotor.set();
+        m_frontLeftMotor.set(wheelSpeeds.frontLeftMetersPerSecond);
+        m_frontRightMotor.set(wheelSpeeds.frontRightMetersPerSecond);
+        m_backLeftMotor.set(wheelSpeeds.rearLeftMetersPerSecond);
+        m_backRightMotor.set(wheelSpeeds.rearRightMetersPerSecond);
     }
 }

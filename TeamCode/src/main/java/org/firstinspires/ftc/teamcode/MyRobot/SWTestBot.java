@@ -50,10 +50,15 @@ public class SWTestBot extends Robot {
 
     private void initializeDriveTrain()
     {
-        m_frontLeftMotor = new Motor(m_hardwareMap, "FL");
-        m_frontRightMotor = new Motor(m_hardwareMap, "FR");
-        m_backLeftMotor = new Motor(m_hardwareMap, "BL");
-        m_backRightMotor = new Motor(m_hardwareMap, "BR");
+        final double GEARBOXRATIO = 20; // 20:1 gearbox ratio (make sure MAXRPM changes the gearbox ratios)
+        final double TICKSPERMOTORROTATION = 24; //number of encoder ticks/counts per 1 rotation of input motor shaft
+        final double CPR = GEARBOXRATIO * TICKSPERMOTORROTATION; //number of encoder Counts Per Revolution (CPR) of output shaft
+        final double MAXRPM = 300; //This is of output shaft rotations as per spec sheets (the default in the library for this motor with 60:1 gearbox was 165).  This will need to be empirically measured
+
+        m_frontLeftMotor = new Motor(m_hardwareMap, "FL", CPR, MAXRPM);
+        m_frontRightMotor = new Motor(m_hardwareMap, "FR", CPR, MAXRPM);
+        m_backLeftMotor = new Motor(m_hardwareMap, "BL", CPR, MAXRPM);
+        m_backRightMotor = new Motor(m_hardwareMap, "BR", CPR, MAXRPM);
 
         m_frontRightMotor.setInverted(true);
         m_backRightMotor.setInverted(true);
