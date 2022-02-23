@@ -3,5 +3,6 @@ package org.firstinspires.ftc.teamcode.MyRobot;
 // enum to specify opMode type
 public enum OpModeType {
     TELEOP,
-    AUTO
+    AUTO,
+    VELOCITY_CONTROL_TUNE
 }
