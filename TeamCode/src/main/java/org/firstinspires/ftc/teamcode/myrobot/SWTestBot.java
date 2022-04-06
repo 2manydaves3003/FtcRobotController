@@ -134,7 +134,7 @@ public class SWTestBot extends Robot {
             m_telemetry.addData("Initialize", "Auton");
             setupAuton();
         }
-        else if (type == Contants.OpModeType.VELOCITY_CONTROL_TUNE)
+        else if (type == Constants.OpModeType.VELOCITY_CONTROL_TUNE)
         {
             m_telemetry.addData("Initialize", "Velocity Control Tuning");
             setupVelocityControlTune();
