@@ -7,36 +7,36 @@ import org.firstinspires.ftc.teamcode.subsystems.MecanumDriveSubsystem;
 
 public class TrajectoryFollowerCommand extends CommandBase {
 
-    private final MecanumDriveSubsystem drive;
-    private final Trajectory trajectory;
+    private final MecanumDriveSubsystem m_driveSubsystem;
+    private final Trajectory m_trajectory;
 
-    public TrajectoryFollowerCommand(MecanumDriveSubsystem drive, Trajectory trajectory) {
-        this.drive = drive;
-        this.trajectory = trajectory;
+    public TrajectoryFollowerCommand(MecanumDriveSubsystem driveSubsystem, Trajectory trajectory) {
+        m_driveSubsystem = driveSubsystem;
+        m_trajectory = trajectory;
 
-        addRequirements(drive);
+        addRequirements(driveSubsystem);
     }
 
     @Override
     public void initialize() {
-        drive.followTrajectory(trajectory);
+        m_driveSubsystem.followTrajectory(m_trajectory);
     }
 
     @Override
     public void execute() {
-        drive.update();
+        m_driveSubsystem.update();
     }
 
     @Override
     public void end(boolean interrupted) {
         if (interrupted) {
-            drive.stop();
+            m_driveSubsystem.stop();
         }
     }
 
     @Override
     public boolean isFinished() {
-        return Thread.currentThread().isInterrupted() || !drive.isBusy();
+        return Thread.currentThread().isInterrupted() || !m_driveSubsystem.isBusy();
     }
 
 }

@@ -7,6 +7,7 @@ import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
@@ -20,42 +21,43 @@ import java.util.List;
  */
 public class MecanumDriveSubsystem extends SubsystemBase {
 
-    private final SampleMecanumDrive drive;
-    private final boolean fieldCentric;
+    private SampleMecanumDrive m_drive;
+    private HardwareMap m_hardwareMap;
 
-    public MecanumDriveSubsystem(SampleMecanumDrive drive, boolean isFieldCentric) {
-        this.drive = drive;
-        fieldCentric = isFieldCentric;
+    public MecanumDriveSubsystem(HardwareMap hardwareMap)
+    {
+        m_hardwareMap = hardwareMap;
+        m_drive = new SampleMecanumDrive(hardwareMap);
     }
 
     public void setMode(DcMotor.RunMode mode) {
-        drive.setMode(mode);
+        m_drive.setMode(mode);
     }
 
     public void setPIDFCoefficients(DcMotor.RunMode mode, PIDFCoefficients coefficients) {
-        drive.setPIDFCoefficients(mode, coefficients);
+        m_drive.setPIDFCoefficients(mode, coefficients);
     }
 
     public void setPoseEstimate(Pose2d pose) {
-        drive.setPoseEstimate(pose);
+        m_drive.setPoseEstimate(pose);
     }
 
     public void update() {
-        drive.update();
+        m_drive.update();
     }
 
     public void updatePoseEstimate() {
-        drive.updatePoseEstimate();
+        m_drive.updatePoseEstimate();
     }
 
-    public void drive(double leftY, double leftX, double rightX) {
+    public void drive(double leftY, double leftX, double rightX, boolean isFieldCentric) {
         Pose2d poseEstimate = getPoseEstimate();
 
         Vector2d input = new Vector2d(-leftY, -leftX).rotated(
-                fieldCentric ? -poseEstimate.getHeading() : 0
+                isFieldCentric ? -poseEstimate.getHeading() : 0
         );
 
-        drive.setWeightedDrivePower(
+        m_drive.setWeightedDrivePower(
                 new Pose2d(
                         input.getX(),
                         input.getY(),
@@ -65,51 +67,51 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     }
 
     public void setDrivePower(Pose2d drivePower) {
-        drive.setDrivePower(drivePower);
+        m_drive.setDrivePower(drivePower);
     }
 
     public Pose2d getPoseEstimate() {
-        return drive.getPoseEstimate();
+        return m_drive.getPoseEstimate();
     }
 
     public TrajectoryBuilder trajectoryBuilder(Pose2d startPose) {
-        return drive.trajectoryBuilder(startPose);
+        return m_drive.trajectoryBuilder(startPose);
     }
 
     public TrajectoryBuilder trajectoryBuilder(Pose2d startPose, boolean reversed) {
-        return drive.trajectoryBuilder(startPose, reversed);
+        return m_drive.trajectoryBuilder(startPose, reversed);
     }
 
     public TrajectoryBuilder trajectoryBuilder(Pose2d startPose, double startHeading) {
-        return drive.trajectoryBuilder(startPose, startHeading);
+        return m_drive.trajectoryBuilder(startPose, startHeading);
     }
 
     public void followTrajectory(Trajectory trajectory) {
-        drive.followTrajectoryAsync(trajectory);
+        m_drive.followTrajectoryAsync(trajectory);
     }
 
     public boolean isBusy() {
-        return drive.isBusy();
+        return m_drive.isBusy();
     }
 
     public void turn(double radians) {
-        drive.turnAsync(radians);
+        m_drive.turnAsync(radians);
     }
 
     public List<Double> getWheelVelocities() {
-        return drive.getWheelVelocities();
+        return m_drive.getWheelVelocities();
     }
 
     public void stop() {
-        drive(0, 0, 0);
+        drive(0, 0, 0, true);
     }
 
     public Pose2d getPoseVelocity() {
-        return drive.getPoseVelocity();
+        return m_drive.getPoseVelocity();
     }
 
     public Localizer getLocalizer() {
-        return drive.getLocalizer();
+        return m_drive.getLocalizer();
     }
 
 }
