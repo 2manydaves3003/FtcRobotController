@@ -47,12 +47,17 @@ public class TeleOp_OpMode extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        Robot m_robot = new SWTestBot(Constants.OpModeType.TELEOP, hardwareMap, telemetry, gamepad1);
+        //Instantiate the robot
+        Robot m_robot = new SWTestBot(
+                Constants.OpModeType.TELEOP,
+                hardwareMap,
+                telemetry,
+                gamepad1);
 
         //Wait for driver to press PLAY
         waitForStart();
 
-        // run until the end of the match (driver presses STOP)
+        // Run the robot until the end of the match (or until the driver presses STOP)
         while (opModeIsActive() && !isStopRequested())
         {
             m_robot.run();

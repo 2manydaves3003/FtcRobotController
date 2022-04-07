@@ -37,7 +37,7 @@ import org.firstinspires.ftc.teamcode.myrobot.SWTestBot;
 import org.firstinspires.ftc.teamcode.myrobot.Constants;
 
 /*
-TeleOp OpMode script using Command-based Robot
+Linear OpMode script using Command-based Robot
  */
 
 @Autonomous(name="VelControlTune_OpMode", group="Autonomous")
@@ -47,12 +47,17 @@ public class VelControlTune_OpMode extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        Robot m_robot = new SWTestBot(Constants.OpModeType.VELOCITY_CONTROL_TUNE, hardwareMap, telemetry, gamepad1);
+        //Intantiate our robot
+        Robot m_robot = new SWTestBot(
+                Constants.OpModeType.VELOCITY_CONTROL_TUNE,
+                hardwareMap,
+                telemetry,
+                gamepad1);
 
         //Wait for driver to press PLAY
         waitForStart();
 
-        // run until the end of the match (driver presses STOP)
+        // Run the robot until the end of the match (or until driver presses STOP)
         while (opModeIsActive() && !isStopRequested())
         {
             m_robot.run();

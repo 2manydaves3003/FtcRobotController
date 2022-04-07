@@ -1,9 +1,5 @@
 package org.firstinspires.ftc.teamcode.myrobot;
 
-import com.arcrobotics.ftclib.geometry.Translation2d;
-
-import org.firstinspires.ftc.teamcode.Subsystems.MecanumDriveKinematics;
-
 public final class Constants
 {
     public final static double NANOSECONDSTOSECONDS = 1e-9;
@@ -33,11 +29,6 @@ public final class Constants
         public static double DRIVEFEEDBACK_KI = 0.0;
         public static double DRIVEFEEDBACK_KD = 0.0;
 
-        public static MecanumDriveKinematics kinematics = new MecanumDriveKinematics(
-                new Translation2d(DRIVEBASELENGTH/2.0, DRIVEBASEWIDTH/2.0),
-                new Translation2d(DRIVEBASELENGTH/2.0, -DRIVEBASEWIDTH/2.0),
-                new Translation2d(-DRIVEBASELENGTH/2.0, DRIVEBASEWIDTH/2.0),
-                new Translation2d(-DRIVEBASELENGTH/2.0, -DRIVEBASEWIDTH/2.0));
     }
 
     // enum to specify opMode type

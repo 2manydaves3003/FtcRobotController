@@ -6,36 +6,36 @@ import org.firstinspires.ftc.teamcode.subsystems.MecanumDriveSubsystem;
 
 public class TurnCommand extends CommandBase {
 
-    private final MecanumDriveSubsystem drive;
-    private final double angle;
+    private final MecanumDriveSubsystem m_driveSubsystem;
+    private final double m_angle;
 
     public TurnCommand(MecanumDriveSubsystem drive, double angle) {
-        this.drive = drive;
-        this.angle = angle;
+        m_driveSubsystem = drive;
+        m_angle = angle;
         
         addRequirements(drive);
     }
 
     @Override
     public void initialize() {
-        drive.turn(angle);
+        m_driveSubsystem.turn(m_angle);
     }
 
     @Override
     public void execute() {
-        drive.update();
+        m_driveSubsystem.update();
     }
 
     @Override
     public void end(boolean interrupted) {
         if (interrupted) {
-            drive.stop();
+            m_driveSubsystem.stop();
         }
     }
 
     @Override
     public boolean isFinished() {
-        return Thread.currentThread().isInterrupted() || !drive.isBusy();
+        return Thread.currentThread().isInterrupted() || !m_driveSubsystem.isBusy();
     }
 
 }

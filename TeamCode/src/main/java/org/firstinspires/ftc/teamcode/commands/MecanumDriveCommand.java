@@ -1,29 +1,35 @@
 package org.firstinspires.ftc.teamcode.commands;
 
 import com.arcrobotics.ftclib.command.CommandBase;
-
 import org.firstinspires.ftc.teamcode.subsystems.MecanumDriveSubsystem;
 
 import java.util.function.DoubleSupplier;
 
 public class MecanumDriveCommand extends CommandBase {
 
-    private final MecanumDriveSubsystem drive;
-    private final DoubleSupplier leftY, leftX, rightX;
+    private final MecanumDriveSubsystem m_driveSubsystem;
+    private final DoubleSupplier m_leftYSupplier;
+    private final DoubleSupplier m_leftXSupplier;
+    private final DoubleSupplier m_rightXSupplier;
+    private boolean m_isFieldCentric;
 
-    public MecanumDriveCommand(MecanumDriveSubsystem drive, DoubleSupplier leftY,
-                               DoubleSupplier leftX, DoubleSupplier rightX) {
-        this.drive = drive;
-        this.leftX = leftX;
-        this.leftY = leftY;
-        this.rightX = rightX;
+    public MecanumDriveCommand(MecanumDriveSubsystem drive, DoubleSupplier leftYSupplier,
+                               DoubleSupplier leftXSupplier, DoubleSupplier rightXSupplier, boolean isFieldCentric) {
+        m_driveSubsystem = drive;
+        m_leftXSupplier = leftXSupplier;
+        m_leftYSupplier = leftYSupplier;
+        m_rightXSupplier = rightXSupplier;
+        m_isFieldCentric = isFieldCentric;
 
-        addRequirements(drive);
+        addRequirements(m_driveSubsystem);
     }
 
     @Override
     public void execute() {
-        drive.drive(leftY.getAsDouble(), leftX.getAsDouble(), rightX.getAsDouble());
+        m_driveSubsystem.drive(m_leftYSupplier.getAsDouble(),
+                m_leftXSupplier.getAsDouble(),
+                m_rightXSupplier.getAsDouble(),
+                m_isFieldCentric);
     }
 
 }
