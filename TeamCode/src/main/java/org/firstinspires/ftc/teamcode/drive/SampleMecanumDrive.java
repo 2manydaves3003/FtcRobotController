@@ -26,6 +26,7 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceRunner;
@@ -57,9 +58,9 @@ public class SampleMecanumDrive extends MecanumDrive {
 
     public static double LATERAL_MULTIPLIER = 1;
 
-    public static double VX_WEIGHT = 1;
-    public static double VY_WEIGHT = 1;
-    public static double OMEGA_WEIGHT = 1;
+    public static double VX_WEIGHT = 1.0;
+    public static double VY_WEIGHT = 1.0;
+    public static double OMEGA_WEIGHT = 1.0;
 
     private TrajectorySequenceRunner trajectorySequenceRunner;
 
@@ -74,8 +75,12 @@ public class SampleMecanumDrive extends MecanumDrive {
     private BNO055IMU imu;
     private VoltageSensor batteryVoltageSensor;
 
-    public SampleMecanumDrive(HardwareMap hardwareMap) {
+    private Telemetry m_telemetry;
+
+    public SampleMecanumDrive(HardwareMap hardwareMap, Telemetry telemetry) {
         super(kV, kA, kStatic, TRACK_WIDTH, TRACK_WIDTH, LATERAL_MULTIPLIER);
+
+        m_telemetry = telemetry;
 
         follower = new HolonomicPIDVAFollower(TRANSLATIONAL_PID, TRANSLATIONAL_PID, HEADING_PID,
                 new Pose2d(0.5, 0.5, Math.toRadians(5.0)), 0.5);
@@ -121,11 +126,17 @@ public class SampleMecanumDrive extends MecanumDrive {
         rightRear = hardwareMap.get(DcMotorEx.class, "BR");
         rightFront = hardwareMap.get(DcMotorEx.class, "FR");
 
+        MotorConfigurationType thing  = leftFront.getMotorType();
+
         motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);
 
+        //Setup motors to have appropriate values for specific setup
         for (DcMotorEx motor : motors) {
             MotorConfigurationType motorConfigurationType = motor.getMotorType().clone();
-            motorConfigurationType.setAchieveableMaxRPMFraction(1.0);
+            motorConfigurationType.setAchieveableMaxRPMFraction(0.85);
+            motorConfigurationType.setMaxRPM(DriveConstants.MAX_RPM);
+            //motorConfigurationType.setGearing(DriveConstants.GEAR_RATIO);
+            motorConfigurationType.setTicksPerRev(DriveConstants.TICKS_PER_REV * DriveConstants.GEAR_RATIO);
             motor.setMotorType(motorConfigurationType);
         }
 
@@ -140,6 +151,7 @@ public class SampleMecanumDrive extends MecanumDrive {
         }
 
         // TODO: reverse any motors using DcMotor.setDirection()
+
 
         // TODO: if desired, use setLocalizer() to change the localization method
         // for instance, setLocalizer(new ThreeTrackingWheelLocalizer(...));
@@ -261,6 +273,11 @@ public class SampleMecanumDrive extends MecanumDrive {
             ).div(denom);
         }
 
+        //m_telemetry.addData("velx", vel.getX());
+        //m_telemetry.addData("vely", vel.getY());
+        //m_telemetry.addData("omega", vel.getHeading());
+
+        //setDriveSignal(new DriveSignal(vel, new Pose2d(0.0,0.0,0.0)));
         setDrivePower(vel);
     }
 
@@ -285,6 +302,13 @@ public class SampleMecanumDrive extends MecanumDrive {
 
     @Override
     public void setMotorPowers(double v, double v1, double v2, double v3) {
+
+        m_telemetry.addData("lf", v);
+        m_telemetry.addData("lr", v1);
+        m_telemetry.addData("rr", v2);
+        m_telemetry.addData("rf", v3);
+        m_telemetry.update();
+
         leftFront.setPower(v);
         leftRear.setPower(v1);
         rightRear.setPower(v2);

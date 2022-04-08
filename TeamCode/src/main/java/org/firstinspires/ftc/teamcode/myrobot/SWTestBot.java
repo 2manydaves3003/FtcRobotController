@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.commands.MecanumDriveCommand;
 import org.firstinspires.ftc.teamcode.subsystems.MecanumDriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.TableSpinnerSubsystem;
 
@@ -37,8 +38,8 @@ public class SWTestBot extends Robot {
         m_telemetry = new MultipleTelemetry(m_telemetry, FtcDashboard.getInstance().getTelemetry());
 
         //Initialize Subsystems
-        m_driveTrain = new MecanumDriveSubsystem(m_hardwareMap);
-        m_tableSpinner = new TableSpinnerSubsystem(m_hardwareMap);
+        m_driveTrain = new MecanumDriveSubsystem(m_hardwareMap, m_telemetry);
+        //m_tableSpinner = new TableSpinnerSubsystem(m_hardwareMap);
 
         //Setup the Robot Commands/Subsystem mappings based on OpMode type
         setupOpMode(type);
@@ -66,6 +67,7 @@ public class SWTestBot extends Robot {
 
     private void setupTeleOp()
     {
+        m_driveTrain.setDefaultCommand(new MecanumDriveCommand(m_driveTrain, ()->m_gamePad1.getLeftY(), ()->m_gamePad1.getLeftX(), ()->m_gamePad1.getRightX(), false));
         /*
         m_driveTrain.setDefaultCommand(new BasicDriveCommand(m_driveTrain,
                 ()->m_gamePad1.getLeftY(),

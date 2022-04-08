@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 import java.util.List;
@@ -23,11 +24,13 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
     private SampleMecanumDrive m_drive;
     private HardwareMap m_hardwareMap;
+    private Telemetry m_telemetry;
 
-    public MecanumDriveSubsystem(HardwareMap hardwareMap)
+    public MecanumDriveSubsystem(HardwareMap hardwareMap, Telemetry telemetry)
     {
         m_hardwareMap = hardwareMap;
-        m_drive = new SampleMecanumDrive(hardwareMap);
+        m_telemetry = telemetry;
+        m_drive = new SampleMecanumDrive(hardwareMap, telemetry);
     }
 
     public void setMode(DcMotor.RunMode mode) {
@@ -56,6 +59,11 @@ public class MecanumDriveSubsystem extends SubsystemBase {
         Vector2d input = new Vector2d(-leftY, -leftX).rotated(
                 isFieldCentric ? -poseEstimate.getHeading() : 0
         );
+
+        //m_telemetry.addData("inputX", input.getX());
+        //m_telemetry.addData("inputY", input.getY());
+        //m_telemetry.addData("-rightX", rightX);
+        //m_telemetry.update();
 
         m_drive.setWeightedDrivePower(
                 new Pose2d(

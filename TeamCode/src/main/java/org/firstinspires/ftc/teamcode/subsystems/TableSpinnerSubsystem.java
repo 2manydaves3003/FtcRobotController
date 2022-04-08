@@ -12,7 +12,7 @@ public class TableSpinnerSubsystem extends SubsystemBase
     public TableSpinnerSubsystem(HardwareMap hardwareMap)
     {
         m_hardwareMap = hardwareMap;
-        m_spinMotor = hardwareMap.get(MotorEx.class, "spinner");
+        m_spinMotor = m_hardwareMap.get(MotorEx.class, "spinner");
     }
 
     public void spin(double power)
