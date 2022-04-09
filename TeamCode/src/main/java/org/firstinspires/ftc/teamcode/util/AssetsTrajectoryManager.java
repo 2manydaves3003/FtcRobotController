@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.util;
 
+import android.content.res.AssetManager;
+
 import androidx.annotation.Nullable;
 
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
@@ -24,6 +26,8 @@ public class AssetsTrajectoryManager {
     public static @Nullable
     TrajectoryGroupConfig loadGroupConfig() {
         try {
+            AssetManager myAssetManager = AppUtil.getDefContext().getAssets();
+            String[] names = myAssetManager.list("");
             InputStream inputStream = AppUtil.getDefContext().getAssets().open(
                     "trajectory/" + TrajectoryConfigManager.GROUP_FILENAME);
             return TrajectoryConfigManager.loadGroupConfig(inputStream);

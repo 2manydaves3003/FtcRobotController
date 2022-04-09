@@ -4,22 +4,23 @@ import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.subsystems.MecanumDriveSubsystem;
+import org.firstinspires.ftc.teamcode.util.AssetsTrajectoryManager;
 
 public class TrajectoryFollowerCommand extends CommandBase {
 
     private final MecanumDriveSubsystem m_driveSubsystem;
-    private final Trajectory m_trajectory;
+    private String m_trajectoryName;
 
-    public TrajectoryFollowerCommand(MecanumDriveSubsystem driveSubsystem, Trajectory trajectory) {
+    public TrajectoryFollowerCommand(MecanumDriveSubsystem driveSubsystem, String trajectoryName) {
         m_driveSubsystem = driveSubsystem;
-        m_trajectory = trajectory;
-
+        m_trajectoryName = trajectoryName;
         addRequirements(driveSubsystem);
     }
 
     @Override
     public void initialize() {
-        m_driveSubsystem.followTrajectory(m_trajectory);
+        Trajectory trajectory = AssetsTrajectoryManager.load(m_trajectoryName);
+        m_driveSubsystem.followTrajectory(trajectory);
     }
 
     @Override
