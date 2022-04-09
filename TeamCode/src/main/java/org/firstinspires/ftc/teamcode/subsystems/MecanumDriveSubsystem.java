@@ -56,20 +56,20 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     public void drive(double leftY, double leftX, double rightX, boolean isFieldCentric) {
         Pose2d poseEstimate = getPoseEstimate();
 
-        Vector2d input = new Vector2d(-leftY, -leftX).rotated(
+//        m_telemetry.addData("poseX", poseEstimate.getX());
+//        m_telemetry.addData("poseY", poseEstimate.getY());
+//        m_telemetry.addData("Heading", poseEstimate.getHeading());
+//        m_telemetry.update();
+
+        Vector2d input = new Vector2d(leftY, leftX).rotated(
                 isFieldCentric ? -poseEstimate.getHeading() : 0
         );
-
-        //m_telemetry.addData("inputX", input.getX());
-        //m_telemetry.addData("inputY", input.getY());
-        //m_telemetry.addData("-rightX", rightX);
-        //m_telemetry.update();
 
         m_drive.setWeightedDrivePower(
                 new Pose2d(
                         input.getX(),
                         input.getY(),
-                        -rightX
+                        rightX
                 )
         );
     }

@@ -21,6 +21,7 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
@@ -136,7 +137,7 @@ public class SampleMecanumDrive extends MecanumDrive {
             motorConfigurationType.setAchieveableMaxRPMFraction(0.85);
             motorConfigurationType.setMaxRPM(DriveConstants.MAX_RPM);
             //motorConfigurationType.setGearing(DriveConstants.GEAR_RATIO);
-            motorConfigurationType.setTicksPerRev(DriveConstants.TICKS_PER_REV * DriveConstants.GEAR_RATIO);
+            motorConfigurationType.setTicksPerRev(DriveConstants.TICKS_PER_REV / DriveConstants.GEAR_RATIO);
             motor.setMotorType(motorConfigurationType);
         }
 
@@ -151,7 +152,8 @@ public class SampleMecanumDrive extends MecanumDrive {
         }
 
         // TODO: reverse any motors using DcMotor.setDirection()
-
+        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightRear.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // TODO: if desired, use setLocalizer() to change the localization method
         // for instance, setLocalizer(new ThreeTrackingWheelLocalizer(...));
@@ -277,7 +279,6 @@ public class SampleMecanumDrive extends MecanumDrive {
         //m_telemetry.addData("vely", vel.getY());
         //m_telemetry.addData("omega", vel.getHeading());
 
-        //setDriveSignal(new DriveSignal(vel, new Pose2d(0.0,0.0,0.0)));
         setDrivePower(vel);
     }
 
@@ -287,7 +288,9 @@ public class SampleMecanumDrive extends MecanumDrive {
         List<Double> wheelPositions = new ArrayList<>();
         for (DcMotorEx motor : motors) {
             wheelPositions.add(encoderTicksToInches(motor.getCurrentPosition()));
+            //m_telemetry.addData("wheelPosition", encoderTicksToInches(motor.getCurrentPosition()));
         }
+        //m_telemetry.update();
         return wheelPositions;
     }
 
@@ -303,11 +306,11 @@ public class SampleMecanumDrive extends MecanumDrive {
     @Override
     public void setMotorPowers(double v, double v1, double v2, double v3) {
 
-        m_telemetry.addData("lf", v);
-        m_telemetry.addData("lr", v1);
-        m_telemetry.addData("rr", v2);
-        m_telemetry.addData("rf", v3);
-        m_telemetry.update();
+//       m_telemetry.addData("lf", v);
+//        m_telemetry.addData("lr", v1);
+//        m_telemetry.addData("rr", v2);
+//        m_telemetry.addData("rf", v3);
+//        m_telemetry.update();
 
         leftFront.setPower(v);
         leftRear.setPower(v1);

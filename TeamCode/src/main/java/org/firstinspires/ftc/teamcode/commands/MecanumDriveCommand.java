@@ -30,6 +30,7 @@ public class MecanumDriveCommand extends CommandBase {
                 m_leftXSupplier.getAsDouble(),
                 m_rightXSupplier.getAsDouble(),
                 m_isFieldCentric);
+        m_driveSubsystem.update();
     }
 
 }

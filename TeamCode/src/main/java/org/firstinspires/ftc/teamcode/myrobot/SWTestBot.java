@@ -67,7 +67,11 @@ public class SWTestBot extends Robot {
 
     private void setupTeleOp()
     {
-        m_driveTrain.setDefaultCommand(new MecanumDriveCommand(m_driveTrain, ()->m_gamePad1.getLeftY(), ()->m_gamePad1.getLeftX(), ()->m_gamePad1.getRightX(), false));
+        m_driveTrain.setDefaultCommand(new MecanumDriveCommand(m_driveTrain,
+                ()->m_gamePad1.getLeftY(),
+                ()->-m_gamePad1.getLeftX(),
+                ()->-m_gamePad1.getRightX(),
+                true));
         /*
         m_driveTrain.setDefaultCommand(new BasicDriveCommand(m_driveTrain,
                 ()->m_gamePad1.getLeftY(),
