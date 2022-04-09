@@ -59,11 +59,7 @@ public class SWTestBot extends Robot {
             m_telemetry.addData("Initialize", "Auton");
             setupAuton();
         }
-        else if (type == Constants.OpModeType.VELOCITY_CONTROL_TUNE)
-        {
-            m_telemetry.addData("Initialize", "Velocity Control Tuning");
-            setupVelocityControlTune();
-        }
+
         m_telemetry.update();
     }
 
@@ -100,8 +96,4 @@ public class SWTestBot extends Robot {
 
     }
 
-    private void setupVelocityControlTune()
-    {
-        //schedule(new VelControlTuneCommand(m_driveTrain, m_robotLocalization, m_telemetry));
-    }
 }
