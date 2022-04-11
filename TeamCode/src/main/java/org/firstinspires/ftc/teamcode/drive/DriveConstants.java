@@ -20,8 +20,8 @@ public class DriveConstants {
     /*
      * These are motor constants that should be listed online for your motors.
      */
-    public static final double TICKS_PER_REV = 480;  //NEEDS TO BE OUTPUT SHAFT TICKS/REV (after gearbox)
-    public static final double MAX_RPM = 300; //NEEDS TO BE OUTPUT SHAFT MAXRPM
+    public static final double TICKS_PER_REV = 480;  //NEEDS TO BE OUTPUT SHAFT TICKS/REV (AFTER motor gearbox)
+    public static final double MAX_RPM = 300; //NEEDS TO BE OUTPUT SHAFT MAXRPM (AFTER motor gearbox)
 
     /*
      * Set RUN_USING_ENCODER to true to enable built-in hub velocity control using drive encoders.
@@ -53,7 +53,7 @@ public class DriveConstants {
      * motor encoders or have elected not to use them for velocity control, these values should be
      * empirically tuned.
      */
-    //public static double kV = 1.0 / rpmToVelocity(MAX_RPM);
+    //public static double kV = 1.0 / rpmToVelocity(MAX_RPM); // ~0.016 for 20:1 gearbox on Torquenado
     public static double kV = 0.02; //empirically found
     public static double kA = 0;
     public static double kStatic = 0;
@@ -65,8 +65,8 @@ public class DriveConstants {
      * small and gradually increase them later after everything is working. All distance units are
      * inches.
      */
-    public static double MAX_VEL = 10;
-    public static double MAX_ACCEL = 20;
+    public static double MAX_VEL = 25;
+    public static double MAX_ACCEL = 30;
     public static double MAX_ANG_VEL = Math.toRadians(60);
     public static double MAX_ANG_ACCEL = Math.toRadians(60);
 
