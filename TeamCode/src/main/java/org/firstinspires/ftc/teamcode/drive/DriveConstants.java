@@ -45,7 +45,7 @@ public class DriveConstants {
      */
     public static double WHEEL_RADIUS = 1.929135; // in
     public static double GEAR_RATIO = 1.0; // needs to be gearing ONLY AFTER output shaft (i.e. should not include gearbox gearing)
-    public static double TRACK_WIDTH = 10.0; // in
+    public static double TRACK_WIDTH = 13.2; // in
 
     /*
      * These are the feedforward parameters used to model the drive motor behavior. If you are using
