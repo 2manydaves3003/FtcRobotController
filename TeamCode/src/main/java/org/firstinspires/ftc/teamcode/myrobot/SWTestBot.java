@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.myrobot;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.Robot;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
@@ -11,6 +13,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.commands.MecanumDriveCommand;
+import org.firstinspires.ftc.teamcode.commands.TableSpinCommand;
 import org.firstinspires.ftc.teamcode.commands.TrajectoryFollowerCommand;
 import org.firstinspires.ftc.teamcode.subsystems.MecanumDriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.TableSpinnerSubsystem;
@@ -41,7 +44,7 @@ public class SWTestBot extends Robot {
 
         //Initialize Subsystems
         m_driveTrain = new MecanumDriveSubsystem(m_hardwareMap, m_telemetry);
-        //m_tableSpinner = new TableSpinnerSubsystem(m_hardwareMap);
+        m_tableSpinner = new TableSpinnerSubsystem(m_hardwareMap);
 
         //Setup the Robot Commands/Subsystem mappings based on OpMode type
         setupOpMode(type);
@@ -72,6 +75,15 @@ public class SWTestBot extends Robot {
                 true));
         m_gamePad1.getGamepadButton(GamepadKeys.Button.B)
                 .whenPressed(new TrajectoryFollowerCommand(m_driveTrain, "test3"));
+
+        m_gamePad1.getGamepadButton(GamepadKeys.Button.Y)
+                .whenPressed(new ParallelCommandGroup(
+                        new TrajectoryFollowerCommand(m_driveTrain, "test3"),
+                        new TableSpinCommand(m_tableSpinner, 0.75)));
+
+        m_gamePad1.getGamepadButton(GamepadKeys.Button.A)
+                .whileHeld(new InstantCommand(() -> {m_tableSpinner.spin(0.75);}))
+                .whenReleased(new InstantCommand(m_tableSpinner::stop, m_tableSpinner));
         /*
         m_driveTrain.setDefaultCommand(new BasicDriveCommand(m_driveTrain,
                 ()->m_gamePad1.getLeftY(),

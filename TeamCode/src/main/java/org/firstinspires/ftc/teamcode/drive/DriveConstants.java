@@ -45,7 +45,7 @@ public class DriveConstants {
      */
     public static double WHEEL_RADIUS = 1.929135; // in
     public static double GEAR_RATIO = 1.0; // needs to be gearing ONLY AFTER output shaft (i.e. should not include gearbox gearing)
-    public static double TRACK_WIDTH = 13.2; // in
+    public static double TRACK_WIDTH = 13.2; // found empirically
 
     /*
      * These are the feedforward parameters used to model the drive motor behavior. If you are using
@@ -54,7 +54,7 @@ public class DriveConstants {
      * empirically tuned.
      */
     //public static double kV = 1.0 / rpmToVelocity(MAX_RPM); // ~0.016 for 20:1 gearbox on Torquenado
-    public static double kV = 0.02; //empirically found
+    public static double kV = 0.02; //empirically found to be a bit better
     public static double kA = 0;
     public static double kStatic = 0;
 
