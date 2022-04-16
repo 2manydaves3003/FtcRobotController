@@ -70,18 +70,18 @@ public class SWTestBot extends Robot {
 
     private void setupTeleOp()
     {
-        m_driveTrain.setDefaultCommand(new TargetingLockCommand(m_driveTrain,
+        m_driveTrain.setDefaultCommand(new MecanumDriveCommand(m_driveTrain,
+                ()->m_gamePad1.getLeftY(),
+                ()->-m_gamePad1.getLeftX(),
+                ()->-m_gamePad1.getRightX(),
+                true));
+        m_gamePad1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenHeld(new TargetingLockCommand(m_driveTrain,
                 ()->m_gamePad1.getLeftY(),
                 ()->-m_gamePad1.getLeftX(),
                 new Vector2d(20.0,0.0),
                 true,
                 m_telemetry
         ));
-//        m_driveTrain.setDefaultCommand(new MecanumDriveCommand(m_driveTrain,
-//                ()->m_gamePad1.getLeftY(),
-//                ()->-m_gamePad1.getLeftX(),
-//                ()->-m_gamePad1.getRightX(),
-//                true));
         m_gamePad1.getGamepadButton(GamepadKeys.Button.B)
                 .whenPressed(new TrajectoryFollowerCommand(m_driveTrain, "test3"));
 

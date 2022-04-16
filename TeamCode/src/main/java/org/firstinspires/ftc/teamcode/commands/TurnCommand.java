@@ -7,18 +7,18 @@ import org.firstinspires.ftc.teamcode.subsystems.MecanumDriveSubsystem;
 public class TurnCommand extends CommandBase {
 
     private final MecanumDriveSubsystem m_driveSubsystem;
-    private final double m_angle;
+    private final double m_angleRadians;
 
-    public TurnCommand(MecanumDriveSubsystem drive, double angle) {
+    public TurnCommand(MecanumDriveSubsystem drive, double angleRadians) {
         m_driveSubsystem = drive;
-        m_angle = angle;
+        m_angleRadians = angleRadians;
         
         addRequirements(drive);
     }
 
     @Override
     public void initialize() {
-        m_driveSubsystem.turn(m_angle);
+        m_driveSubsystem.turn(m_angleRadians);
     }
 
     @Override

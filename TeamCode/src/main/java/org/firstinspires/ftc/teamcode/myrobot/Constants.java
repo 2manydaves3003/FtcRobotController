@@ -35,6 +35,5 @@ public final class Constants
     public enum OpModeType {
         TELEOP,
         AUTO,
-        VELOCITY_CONTROL_TUNE
     }
 }

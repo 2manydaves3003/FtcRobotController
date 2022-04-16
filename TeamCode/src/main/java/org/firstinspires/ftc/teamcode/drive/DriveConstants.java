@@ -20,7 +20,7 @@ public class DriveConstants {
     /*
      * These are motor constants that should be listed online for your motors.
      */
-    public static final double TICKS_PER_REV = 480;  //NEEDS TO BE OUTPUT SHAFT TICKS/REV (AFTER motor gearbox)
+    public static final double TICKS_PER_REV = 480;  //NEEDS TO BE TICKS/(OUTPUT SHAFT REV) (i.e. AFTER motor gearbox)
     public static final double MAX_RPM = 300; //NEEDS TO BE OUTPUT SHAFT MAXRPM (AFTER motor gearbox)
 
     /*

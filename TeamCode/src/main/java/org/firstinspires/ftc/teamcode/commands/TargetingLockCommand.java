@@ -40,20 +40,21 @@ public class TargetingLockCommand extends CommandBase {
     public void initialize() {
         m_pidController = new PIDFController(m_PIDCoefficients);
         m_pidController.setInputBounds(-Math.PI, Math.PI);
-        m_driveSubsystem.setPoseEstimate(new Pose2d(0.0, 0.0, 0.0));
+        //m_driveSubsystem.setPoseEstimate(new Pose2d(0.0, 0.0, 0.0));
     }
 
     @Override
     public void execute() {
         Pose2d currentPose = m_driveSubsystem.getPoseEstimate();
         Vector2d targetvec = m_targetLock.minus(new Vector2d(currentPose.getX(), currentPose.getY()));
-        Vector2d targetvecNorm = targetvec.div(targetvec.norm());
-        Vector2d unitVec = new Vector2d(1.0, 0.0);
-        double x1 = unitVec.getX();
-        double y1 = unitVec.getY();
-        double x2 = targetvecNorm.getX();
-        double y2 = targetvecNorm.getY();
-        double targetAngle = Math.atan2(x1*y2 - x2*y1, x1*x2 + y1*y2);
+        //Vector2d targetvecNorm = targetvec.div(targetvec.norm());
+        //Vector2d unitVec = new Vector2d(1.0, 0.0);
+        //double x1 = unitVec.getX();
+        //double y1 = unitVec.getY();
+        //double x2 = targetvecNorm.getX();
+        //double y2 = targetvecNorm.getY();
+        //double targetAngle = Math.atan2(x1*y2 - x2*y1, x1*x2 + y1*y2);
+        double targetAngle = Math.atan2(targetvec.getY(), targetvec.getX());
 
         m_pidController.setTargetPosition(targetAngle);
         double heading_control = m_pidController.update(currentPose.getHeading());
@@ -71,12 +72,11 @@ public class TargetingLockCommand extends CommandBase {
         m_driveSubsystem.update();
     }
 
-    @Override
-    public void end(boolean interrupted) {
-        if (interrupted) {
-            m_driveSubsystem.stop();
-        }
-    }
-
+//    @Override
+//    public void end(boolean interrupted) {
+//        if (interrupted) {
+//            m_driveSubsystem.stop();
+//        }
+//    }
 
 }
