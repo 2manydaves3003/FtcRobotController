@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.myrobot;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.Robot;
@@ -14,6 +15,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.commands.MecanumDriveCommand;
 import org.firstinspires.ftc.teamcode.commands.TableSpinCommand;
+import org.firstinspires.ftc.teamcode.commands.TargetingLockCommand;
 import org.firstinspires.ftc.teamcode.commands.TrajectoryFollowerCommand;
 import org.firstinspires.ftc.teamcode.subsystems.MecanumDriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.TableSpinnerSubsystem;
@@ -68,11 +70,18 @@ public class SWTestBot extends Robot {
 
     private void setupTeleOp()
     {
-        m_driveTrain.setDefaultCommand(new MecanumDriveCommand(m_driveTrain,
+        m_driveTrain.setDefaultCommand(new TargetingLockCommand(m_driveTrain,
                 ()->m_gamePad1.getLeftY(),
                 ()->-m_gamePad1.getLeftX(),
-                ()->-m_gamePad1.getRightX(),
-                true));
+                new Vector2d(20.0,0.0),
+                true,
+                m_telemetry
+        ));
+//        m_driveTrain.setDefaultCommand(new MecanumDriveCommand(m_driveTrain,
+//                ()->m_gamePad1.getLeftY(),
+//                ()->-m_gamePad1.getLeftX(),
+//                ()->-m_gamePad1.getRightX(),
+//                true));
         m_gamePad1.getGamepadButton(GamepadKeys.Button.B)
                 .whenPressed(new TrajectoryFollowerCommand(m_driveTrain, "test3"));
 

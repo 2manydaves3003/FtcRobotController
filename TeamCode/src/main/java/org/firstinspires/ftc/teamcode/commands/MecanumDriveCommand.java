@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.commands;
 
 import com.arcrobotics.ftclib.command.CommandBase;
+import com.qualcomm.robotcore.hardware.DcMotor;
+
 import org.firstinspires.ftc.teamcode.subsystems.MecanumDriveSubsystem;
 
 import java.util.function.DoubleSupplier;
@@ -22,6 +24,11 @@ public class MecanumDriveCommand extends CommandBase {
         m_isFieldCentric = isFieldCentric;
 
         addRequirements(m_driveSubsystem);
+    }
+
+    @Override
+    public void initialize() {
+        //m_driveSubsystem.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     @Override

@@ -59,9 +59,10 @@ public class SampleMecanumDrive extends MecanumDrive {
 
     public static double LATERAL_MULTIPLIER = 1;
 
-    public static double VX_WEIGHT = 1.0;
-    public static double VY_WEIGHT = 1.0;
-    public static double OMEGA_WEIGHT = 1.0;
+    //Weights for teleop speed scaling
+    public static double VX_WEIGHT = 0.4;
+    public static double VY_WEIGHT = 0.4;
+    public static double OMEGA_WEIGHT = 0.4;
 
     private TrajectorySequenceRunner trajectorySequenceRunner;
 
@@ -259,25 +260,30 @@ public class SampleMecanumDrive extends MecanumDrive {
     }
 
     public void setWeightedDrivePower(Pose2d drivePower) {
-        Pose2d vel = drivePower;
-
-        if (Math.abs(drivePower.getX()) + Math.abs(drivePower.getY())
-                + Math.abs(drivePower.getHeading()) > 1) {
-            // re-normalize the powers according to the weights
-            double denom = VX_WEIGHT * Math.abs(drivePower.getX())
-                    + VY_WEIGHT * Math.abs(drivePower.getY())
-                    + OMEGA_WEIGHT * Math.abs(drivePower.getHeading());
-
-            vel = new Pose2d(
-                    VX_WEIGHT * drivePower.getX(),
+        Pose2d vel = new Pose2d(VX_WEIGHT * drivePower.getX(),
                     VY_WEIGHT * drivePower.getY(),
-                    OMEGA_WEIGHT * drivePower.getHeading()
-            ).div(denom);
-        }
+                    OMEGA_WEIGHT * drivePower.getHeading());
 
-        //m_telemetry.addData("velx", vel.getX());
-        //m_telemetry.addData("vely", vel.getY());
-        //m_telemetry.addData("omega", vel.getHeading());
+
+
+//        if (Math.abs(drivePower.getX()) + Math.abs(drivePower.getY())
+//                + Math.abs(drivePower.getHeading()) > 1) {
+//            // re-normalize the powers according to the weights
+//            double denom = VX_WEIGHT * Math.abs(drivePower.getX())
+//                    + VY_WEIGHT * Math.abs(drivePower.getY())
+//                    + OMEGA_WEIGHT * Math.abs(drivePower.getHeading());
+//
+//            vel = new Pose2d(
+//                    VX_WEIGHT * drivePower.getX(),
+//                    VY_WEIGHT * drivePower.getY(),
+//                    OMEGA_WEIGHT * drivePower.getHeading()
+//            ).div(denom);
+//        }
+
+//        m_telemetry.addData("velx", vel.getX());
+//        m_telemetry.addData("vely", vel.getY());
+//        m_telemetry.addData("omega", vel.getHeading());
+//        m_telemetry.update();
 
         setDrivePower(vel);
     }
