@@ -4,9 +4,11 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.Robot;
+import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -114,7 +116,12 @@ public class SWTestBot extends Robot {
 
     private void setupAuton()
     {
-
+        CommandScheduler.getInstance().schedule(
+                new SequentialCommandGroup(
+                        new TrajectoryFollowerCommand(m_driveTrain, "test3"),
+                        new TrajectoryFollowerCommand(m_driveTrain, "test3")
+                        //new TableSpinCommand(m_tableSpinner, 0.75)
+                ));
     }
 
 }

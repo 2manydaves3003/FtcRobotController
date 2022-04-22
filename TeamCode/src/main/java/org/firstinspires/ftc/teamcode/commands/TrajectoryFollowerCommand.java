@@ -6,6 +6,8 @@ import com.arcrobotics.ftclib.command.CommandBase;
 import org.firstinspires.ftc.teamcode.subsystems.MecanumDriveSubsystem;
 import org.firstinspires.ftc.teamcode.util.AssetsTrajectoryManager;
 
+import java.util.List;
+
 public class TrajectoryFollowerCommand extends CommandBase {
 
     private final MecanumDriveSubsystem m_driveSubsystem;

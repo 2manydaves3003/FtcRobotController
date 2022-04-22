@@ -40,7 +40,7 @@ public class TableSpinCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return Thread.currentThread().isInterrupted() || (m_timer.time() > 6) ;
+        return Thread.currentThread().isInterrupted() || (m_timer.time() > 3) ;
     }
 
 }
