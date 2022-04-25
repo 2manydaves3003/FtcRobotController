@@ -11,18 +11,18 @@ import java.util.List;
 public class TrajectoryFollowerCommand extends CommandBase {
 
     private final MecanumDriveSubsystem m_driveSubsystem;
-    private String m_trajectoryName;
+    private final Trajectory m_trajectory;
 
     public TrajectoryFollowerCommand(MecanumDriveSubsystem driveSubsystem, String trajectoryName) {
         m_driveSubsystem = driveSubsystem;
-        m_trajectoryName = trajectoryName;
+        m_trajectory = AssetsTrajectoryManager.load(trajectoryName);
         addRequirements(driveSubsystem);
     }
 
     @Override
     public void initialize() {
-        Trajectory trajectory = AssetsTrajectoryManager.load(m_trajectoryName);
-        m_driveSubsystem.followTrajectory(trajectory);
+
+        m_driveSubsystem.followTrajectory(m_trajectory);
     }
 
     @Override

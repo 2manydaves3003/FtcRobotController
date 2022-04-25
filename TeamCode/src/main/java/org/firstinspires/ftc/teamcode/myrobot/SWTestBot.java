@@ -19,6 +19,7 @@ import org.firstinspires.ftc.teamcode.commands.MecanumDriveCommand;
 import org.firstinspires.ftc.teamcode.commands.TableSpinCommand;
 import org.firstinspires.ftc.teamcode.commands.TargetingLockCommand;
 import org.firstinspires.ftc.teamcode.commands.TrajectoryFollowerCommand;
+import org.firstinspires.ftc.teamcode.commands.TurnCommand;
 import org.firstinspires.ftc.teamcode.subsystems.MecanumDriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.TableSpinnerSubsystem;
 
@@ -86,6 +87,8 @@ public class SWTestBot extends Robot {
         ));
         m_gamePad1.getGamepadButton(GamepadKeys.Button.B)
                 .whenPressed(new TrajectoryFollowerCommand(m_driveTrain, "test3"));
+                //.whenPressed(new TurnCommand(m_driveTrain, 0.5));
+                //.whenPressed(new TableSpinCommand(m_tableSpinner, 0.75));
 
         m_gamePad1.getGamepadButton(GamepadKeys.Button.Y)
                 .whenPressed(new ParallelCommandGroup(
