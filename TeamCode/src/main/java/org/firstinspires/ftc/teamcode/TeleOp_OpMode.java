@@ -54,7 +54,7 @@ public class TeleOp_OpMode extends LinearOpMode {
                 telemetry,
                 gamepad1);
 
-        //Wait for driver to press PLAY
+        //Wait for driver to press PLAY and then STOP
         waitForStart();
 
         // Run the robot until the end of the match (or until the driver presses STOP)
