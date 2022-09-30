@@ -1,6 +1,13 @@
 ## NOTICE
 
-This repository contains the public FTC SDK for the Freight Frenzy (2021-2022) competition season.
+This repository contains the public FTC SDK (V8.0) for the PowerPlay (2022-2023) competition season.  It also contains updated gradle files to support the following third party libraries:
+
+* FTClib 2.0.1 (command-based architecture)
+* FTCDashboard 0.4.6 (robot visualization, tuning and control)
+* RoadRunner 0.5.6 (pathplanning) 
+* EasyOpenCV 1.52 (vision system) 
+
+These libraries were included with the SDK so as to make a good foundation for our team code.  Below is the boilerplate text from the original README.md for the FtcRobotController SDK. 
 
 ## Welcome!
 This GitHub repository contains the source code that is used to build an Android app to control a *FIRST* Tech Challenge competition robot.  To use this SDK, download/clone the entire project to your local computer.
